@@ -1,0 +1,3 @@
+-e git+ssh://git@gitlab.com/topdatascience/aiya/aiya_seqmod@65dad17c8925b6974cd33d4a3e13c756406ab55e#egg=aiya_seqmod
+
+-e .

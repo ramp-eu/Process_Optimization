@@ -40,3 +40,37 @@ coverage/
 .next
 push.sh
 package-lock.json
+
+# py
+__pycache__/
+*.py[cod]
+*$py.class
+
+# build
+build/
+dist/
+*.egg
+*.egg-info
+
+# env
+env/
+venv/
+node_modules/
+
+# test
+.pytest_cache/
+htmlcov/
+.coverage
+
+# misc
+.DS_Store
+*.log
+*.sqlite
+*.zip
+
+# models
+# data/ai_models/*
+# !data/ai_models/.gitkeep
+
+# deployment
+production.ini
