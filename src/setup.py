@@ -28,7 +28,7 @@ base_requires = [
 
     # this is actually not required but some model is pickling incorrectly
     # 'dill==0.3.1.1',
-    'numpy == 1.17.3',
+    'numpy',
 ]
 
 test_requires = [
