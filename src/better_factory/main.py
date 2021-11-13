@@ -48,6 +48,9 @@ def main(config):
     config.include('.security.cors')
     config.add_cors_preflight_handler()
 
+    # openapi
+    config.include("pyramid_openapi3")
+
     # internal
     config.include('.models')
     config.include('.routes')

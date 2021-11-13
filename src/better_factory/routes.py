@@ -1,6 +1,13 @@
 def includeme(config):
     api_base = '/api/v1.0'
 
+    # openapi
+    config.pyramid_openapi3_spec(
+        "openapi.yaml",
+        route=f"{api_base}/openapi.yaml",
+    )
+    config.pyramid_openapi3_add_explorer(route=f"{api_base}/")
+
     # auth
     # config.add_route('auth_api.login', f'{api_base}/login/')
 

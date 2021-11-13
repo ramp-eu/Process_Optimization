@@ -1,0 +1,103 @@
+openapi: 3.0.1
+info:
+  title: Process Optimization API
+  description: API to interact with process optimization module
+  version: "1.0"
+servers:
+- url: http://localhost:6543/api/v1.0/
+paths:
+  /model/predict/:
+    post:
+      summary: Get prediction from input data
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      timestamp:
+                        type: string
+                      additionalProperties:
+                        type: number
+                        format: float
+              example:
+                model: mockup
+                data:
+                  - timestamp: "2020-02-04T12:35:00.000Z"
+                    tag_name_1: 38.9917030334473
+                    tag_name_2: 20
+        required: false
+      responses:
+        200:
+          description: Return predictions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  predictions:
+                    type: array
+                    items:
+                      type: number
+                      format: float
+        400:
+          description: Error running prediction
+          content: {}
+        401:
+          description: Unauthenticated
+          content: {}
+        403:
+          description: Unauthorized request, invalid token
+          content: {}
+  /model/optimize/:
+    post:
+      summary: Get optimization from input key
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: float
+              example: ["tag_name_1", "tag_name_2"]
+        required: false
+      responses:
+        200:
+          description: Return optimizations of input keys
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  additionalProperties:
+                    type: number
+                    format: float
+        400:
+          description: Error running optimization
+          content: {}
+        401:
+          description: Unauthenticated
+          content: {}
+        403:
+          description: Unauthorized request, invalid token
+          content: {}
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer
+security:
+  - bearerAuth: []
