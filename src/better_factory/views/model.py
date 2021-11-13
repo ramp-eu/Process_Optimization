@@ -23,7 +23,7 @@ logger = logging.getLogger('better_factory')
 class PredictApi(BaseApi):
 
     @view_config(
-        route_name='predict_api.predict',
+        route_name='model_api.predict',
         request_method='POST',
     )
     def predict(self):
@@ -48,3 +48,11 @@ class PredictApi(BaseApi):
             "predictions": pred.to_list(),
         }
 
+
+    @view_config(
+        route_name='model_api.optimize',
+        request_method='POST',
+    )
+    def optimize(self):
+        return {}
+        

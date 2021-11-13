@@ -1,2 +1,2 @@
 #!/bin/bash
-pserve /app/production.ini
+pserve /app/config/production.ini

@@ -4,7 +4,9 @@ def includeme(config):
     # auth
     # config.add_route('auth_api.login', f'{api_base}/login/')
 
-    # user
-    config.add_route('predict_api.predict', f'{api_base}/predict/')
+    config.add_route('model_api.predict', f'{api_base}/model/predict/')
+    config.add_route('model_api.optimize', f'{api_base}/model/optimize/')
 
-    # mill, metadata only, not in use at the moment
+    # config.add_route('train_api.upload', f'{api_base}/train/upload/')
+    # config.add_route('train_api.queue', f'{api_base}/train/queue/')
+    # config.add_route('train_api.fetch', f'{api_base}/train/upload/')

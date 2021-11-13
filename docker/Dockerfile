@@ -14,6 +14,8 @@ COPY src/. /app
 COPY docker/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
+COPY src/config/production.ini.example /app/config/production.ini
+
 EXPOSE 6543
 
 ENTRYPOINT ["/app/entrypoint.sh"]
