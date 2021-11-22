@@ -13,7 +13,8 @@ from aiya_seqmod.interface import ModelManager
 
 # from .. import models
 from ..schemas.predict import (
-    PredictSchema
+    PredictInputSchema,
+    PredictResponseSchema,
 )
 from .base import BaseApi
 from .exceptions import ApiError
@@ -25,9 +26,10 @@ class PredictApi(BaseApi):
     @view_config(
         route_name='model_api.predict',
         request_method='POST',
+        openapi=True,
     )
     def predict(self):
-        params = PredictSchema().load(self.request.json_body)
+        params = PredictInputSchema().load(self.request.json_body)
         # path where the model and the data frames are stored
         model_path = Path(f"data/models/{params['model']}")
 
@@ -52,6 +54,7 @@ class PredictApi(BaseApi):
     @view_config(
         route_name='model_api.optimize',
         request_method='POST',
+        openapi=True,
     )
     def optimize(self):
         return {}

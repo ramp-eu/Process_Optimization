@@ -1,7 +1,10 @@
 from marshmallow import Schema, fields
 
 
-class PredictSchema(Schema):
+class PredictInputSchema(Schema):
     model = fields.Str(required=True)
-    # inputs = fields.List()
+    data = fields.List(fields.Dict())
 
+
+class PredictResponseSchema(Schema):
+    predictions = fields.List(fields.Float())
