@@ -15,6 +15,8 @@ from aiya_seqmod.interface import ModelManager
 from ..schemas.predict import (
     PredictInputSchema,
     PredictResponseSchema,
+    OptimizeInputSchema,
+    OptimizeResponseSchema,
 )
 from .base import BaseApi
 from .exceptions import ApiError
@@ -32,6 +34,7 @@ class PredictApi(BaseApi):
         params = PredictInputSchema().load(self.request.json_body)
         # path where the model and the data frames are stored
         model_path = Path(f"data/models/{params['model']}")
+        data = params['data']
 
         # load the model
         model = aiya_seqmod.load(model_path)
@@ -46,9 +49,9 @@ class PredictApi(BaseApi):
 
         # make prediction given the latest online data
         pred = model_manager.predict(df)['y']
-        return {
+        return PredictResponseSchema().dump({
             "predictions": pred.to_list(),
-        }
+        })
 
 
     @view_config(
@@ -57,5 +60,13 @@ class PredictApi(BaseApi):
         openapi=True,
     )
     def optimize(self):
-        return {}
+        params = OptimizeInputSchema().load(self.request.json_body)
+        tags = params["tags"]
+
+        return OptimizeResponseSchema().dump({
+            "optimizations": {
+                f"{tag}": 2.0
+                for tag in tags
+            }
+        })
         

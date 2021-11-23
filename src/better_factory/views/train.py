@@ -34,7 +34,7 @@ class TrainApi(BaseApi):
         # TODO: start the training process
         
         return TrainResponseSchema().dump({
-            "model": "mockup",
+            "model": "test",
             "status": "available",
         })
 
@@ -49,7 +49,7 @@ class TrainApi(BaseApi):
         model = params.get("model", None)
 
         return TrainResponseSchema().dump({
-            "model": "mockup",
+            "model": "test",
             "status": "available",
         })
         

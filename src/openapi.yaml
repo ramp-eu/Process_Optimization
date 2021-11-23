@@ -30,7 +30,7 @@ paths:
                         type: number
                         format: float
               example:
-                model: mockup
+                model: test
                 data:
                   - timestamp: "2020-02-04T12:35:00.000Z"
                     tag_name_1: 38.9917030334473
@@ -60,30 +60,36 @@ paths:
           content: {}
   /model/optimize/:
     post:
-      summary: Get optimization from input key
+      summary: Get optimization from input tag
       security:
         - bearerAuth: []
       requestBody:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: string
-                format: float
-              example: ["tag_name_1", "tag_name_2"]
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+              example: 
+                tags: ["tag_name_1", "tag_name_2"]
         required: false
       responses:
         200:
-          description: Return optimizations of input keys
+          description: Return optimizations of input tags
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  additionalProperties:
-                    type: number
-                    format: float
+                  optimizatons:
+                    type: object
+                    properties:
+                      additionalProperties:
+                        type: number
+                        format: float
         400:
           description: Error running optimization
           content: {}
@@ -123,7 +129,7 @@ paths:
                         type: number
                         format: float
               example:
-                model: mockup
+                model: test
                 data:
                   - timestamp: "2020-02-04T12:35:00.000Z"
                     tag_name_1: 38.9917030334473
