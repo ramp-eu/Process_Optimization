@@ -38,7 +38,7 @@ class PredictApi(BaseApi):
 
         # load the model
         model = aiya_seqmod.load(model_path)
-
+        
         # create model manager
         # NOTE: here we use dummy preprocessor; in reality we would load a preprocessor-object
         # which was created at the time of model fitting, but let's ignore it for now...
