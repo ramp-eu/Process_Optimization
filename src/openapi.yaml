@@ -24,7 +24,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      timestamp:
+                      time:
                         type: string
                       additionalProperties:
                         type: number
@@ -32,7 +32,7 @@ paths:
               example:
                 model: test
                 data:
-                  - timestamp: "2020-02-04T12:35:00.000Z"
+                  - time: "2020-02-04T12:35:00.000Z"
                     tag_name_1: 38.9917030334473
                     tag_name_2: 20
         required: false
@@ -123,7 +123,7 @@ paths:
                   items:
                     type: object
                     properties:
-                      timestamp:
+                      time:
                         type: string
                       additionalProperties:
                         type: number
@@ -131,7 +131,7 @@ paths:
               example:
                 model: test
                 data:
-                  - timestamp: "2020-02-04T12:35:00.000Z"
+                  - time: "2020-02-04T12:35:00.000Z"
                     tag_name_1: 38.9917030334473
                     tag_name_2: 20
                 input_tags: ["tag_1", "tag_2"]
@@ -158,38 +158,38 @@ paths:
         403:
           description: Unauthorized request, invalid token
           content: {}
-  /train/fetch/:
-    get:
-      summary: Get training status
-      security:
-        - bearerAuth: []
-      parameters:
-        - in: query
-          name: model
-          schema: 
-            type: string
-          description: Name of the model/training
-      responses:
-        200:
-          description: Return training info and status
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  model:
-                    type: string
-                  status:
-                    type: string
-        400:
-          description: Error start training
-          content: {}
-        401:
-          description: Unauthenticated
-          content: {}
-        403:
-          description: Unauthorized request, invalid token
-          content: {}
+  # /train/fetch/:
+  #   get:
+  #     summary: Get training status
+  #     security:
+  #       - bearerAuth: []
+  #     parameters:
+  #       - in: query
+  #         name: model
+  #         schema: 
+  #           type: string
+  #         description: Name of the model/training
+  #     responses:
+  #       200:
+  #         description: Return training info and status
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 model:
+  #                   type: string
+  #                 status:
+  #                   type: string
+  #       400:
+  #         description: Error start training
+  #         content: {}
+  #       401:
+  #         description: Unauthenticated
+  #         content: {}
+  #       403:
+  #         description: Unauthorized request, invalid token
+  #         content: {}
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme

@@ -6,3 +6,10 @@ By default, the Dockerfile build the image from current code.
 ./docker/build.sh --help
 ./docker/build.sh -t process_optimization .
 ```
+
+## Development
+
+```console
+docker-compose up --build -d
+
+```

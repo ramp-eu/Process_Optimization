@@ -69,8 +69,9 @@ htmlcov/
 *.zip
 
 # models
-# data/ai_models/*
-# !data/ai_models/.gitkeep
+src/data/models/*
+src/data/*
+# !src/data/models/.gitkeep
 
 # deployment
 production.ini

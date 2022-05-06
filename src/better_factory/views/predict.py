@@ -1,4 +1,6 @@
 import logging
+import csv
+import tempfile
 
 from pyramid.view import view_config
 from sqlalchemy.orm import joinedload
@@ -20,10 +22,15 @@ from ..schemas.predict import (
 )
 from .base import BaseApi
 from .exceptions import ApiError
+from bflab.interface import train, predict
+from bflab.utils import (
+    load_training_yaml, load_prediction_yaml,
+    load_yaml, save_yaml
+)
 
 logger = logging.getLogger('better_factory')
 
-class PredictApi(BaseApi):
+class ModelApi(BaseApi):
 
     @view_config(
         route_name='model_api.predict',
@@ -33,25 +40,23 @@ class PredictApi(BaseApi):
     def predict(self):
         params = PredictInputSchema().load(self.request.json_body)
         # path where the model and the data frames are stored
+        config = load_prediction_yaml()
         model_path = Path(f"data/models/{params['model']}")
-        data = params['data']
+        config['model_path'] = model_path
 
-        # load the model
-        model = aiya_seqmod.load(model_path)
-        
-        # create model manager
-        # NOTE: here we use dummy preprocessor; in reality we would load a preprocessor-object
-        # which was created at the time of model fitting, but let's ignore it for now...
-        model_manager = ModelManager(model, IdentityPreprocessor())
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            data = params['data']
+            keys = data[0].keys()
+            with open(f"{tmpdirname}/data.csv", "w") as file:
+                dict_writer = csv.DictWriter(file, keys)
+                dict_writer.writeheader()
+                dict_writer.writerows(data)
+            config['data_path'] = file.name
 
-        # load some mock-up data, that simulates real sensor data from an online process
-        df = pd.read_pickle(Path(f"data/df_test.pkl"))
-
-        # make prediction given the latest online data
-        pred = model_manager.predict(df)['y']
-        return PredictResponseSchema().dump({
-            "predictions": pred.to_list(),
-        })
+            pred = predict(config)
+            return PredictResponseSchema().dump({
+                "predictions": pred['y'].to_list()
+            })
 
 
     @view_config(

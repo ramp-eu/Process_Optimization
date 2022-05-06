@@ -1,6 +1,7 @@
 openapi-core==0.13.2
 pyramid-openapi3==0.8.3
 
--e git+ssh://git@gitlab.com/topdatascience/aiya/aiya_seqmod@65dad17c8925b6974cd33d4a3e13c756406ab55e#egg=aiya_seqmod
+aiya_seqmod @ git+ssh://git@gitlab.com/topdatascience/aiya/aiya_seqmod@development#aiya_seqmod
+better_factory_lab @ git+ssh://git@gitlab.com/topdatascience/better_factory_lab@ductm-update-package#egg=better_factory_lab
 
 -e .
