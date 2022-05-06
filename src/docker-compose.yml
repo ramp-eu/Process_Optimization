@@ -6,10 +6,9 @@ services:
       context: .
       ssh:
         - default
+    image: docker.ramp.eu/tds-pvt/pserve:latest
     command: /app/config/docker.ini --reload
     volumes:
       - .:/app
     ports:
       - 6543:6543
-    # env_file:
-    #   - .env

@@ -1,15 +1,7 @@
-## How to build an image
+### Running the module
 
-By default, the Dockerfile build the image from current code.
-
-```console
-./docker/build.sh --help
-./docker/build.sh -t process_optimization .
 ```
+echo "$LOGIN_SECRET" | docker login --username username --password-stdin docker.ramp.eu
 
-## Development
-
-```console
-docker-compose up --build -d
-
+docker-compose up -d
 ```

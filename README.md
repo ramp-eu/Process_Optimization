@@ -55,25 +55,20 @@ The following steps are recommended to setting up the module:
 
 ## Usage
 
-1. `docker pull`
-2. `docker run -p 6543:6543 process_optimization`
-3. The API service will be then accessible via `http://localhost:6543/api/v1.0/`
+0. Contact TDS and RAMP for granting access to private docker repo in RAMP (docker.ramp.eu)
+1. Clone or copy folder `docker` to your local environment
+2. Login to docker.ramp.eu through docker CLI
+3. Modify `docker-compose.yml' to mount local folder for AI model storage after training
+4. Exec `docker-compose up -d`
+
+The API docs will be then accessible via `http://localhost:6543/api/v1.0/`. An example of API can also be replicated
+using exported postman file `docker/ramp-TDS.postman_collection.json`.
 
 ```text
 Definition of the API interface:
 
 Information about the API can be found in the [API documentation](http://localhost:6543/api/v1.0/) of the running docker container; or `src/openapi.yaml`
-
 ```
-
-## Testing
-
-Testing the pipeline can be done whe the following requirements are prepared:
-
--   through training and inference API endpoints exposed through docker containers
--   training and inference resources are configured
--   training data
--   testing data
 
 ## Feedback
 

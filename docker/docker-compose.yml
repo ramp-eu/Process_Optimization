@@ -2,17 +2,9 @@ version: "3"
 
 services:
   pserve:
-    build: .
-    command: pserve /app/development-docker.ini --reload
+    image: docker.ramp.eu/tds-pvt/pserve:latest
+    command: /app/config/docker.ini
     volumes:
-      - .:/app
+      - models:/app/data/models
     ports:
       - 6543:6543
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - postgres
-
-volumes:
-  cvp_pgdata:
