@@ -22,10 +22,9 @@ from ..schemas.predict import (
 )
 from .base import BaseApi
 from .exceptions import ApiError
-from bflab.interface import train, predict
+from bflab.interface import train, predict, optimize
 from bflab.utils import (
-    load_training_yaml, load_prediction_yaml,
-    load_yaml, save_yaml
+    load_template, load_yaml, save_yaml
 )
 
 logger = logging.getLogger('better_factory')
@@ -40,7 +39,7 @@ class ModelApi(BaseApi):
     def predict(self):
         params = PredictInputSchema().load(self.request.json_body)
         # path where the model and the data frames are stored
-        config = load_prediction_yaml()
+        config = load_template('prediction')
         model_path = Path(f"data/models/{params['model']}")
         config['model_path'] = model_path
 
@@ -66,12 +65,27 @@ class ModelApi(BaseApi):
     )
     def optimize(self):
         params = OptimizeInputSchema().load(self.request.json_body)
-        tags = params["tags"]
+        config = load_template('optimization')
+        model_path = Path(f"data/models/{params['model']}")
+        config['model_path'] = model_path
+        config["task"]['optim_limits'] = params["optim_limits"]
+        config["task"]['setpoints'] = params["setpoints"]
 
-        return OptimizeResponseSchema().dump({
-            "optimizations": {
-                f"{tag}": 2.0
-                for tag in tags
-            }
-        })
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            data = params['data']
+            keys = data[0].keys()
+            with open(f"{tmpdirname}/data.csv", "w") as file:
+                dict_writer = csv.DictWriter(file, keys)
+                dict_writer.writeheader()
+                dict_writer.writerows(data)
+            config['data_path'] = file.name
+
+            opt = optimize(config)
+
+            return OptimizeResponseSchema().dump({
+                "optimizations": {
+                    f"{tag}": opt[tag].tolist()[0]
+                    for tag in opt.columns.tolist()
+                }
+            })
         

@@ -11,7 +11,11 @@ class PredictResponseSchema(Schema):
 
 
 class OptimizeInputSchema(Schema):
-    tags = fields.List(fields.Str())
+    model = fields.Str(required=True)
+    data = fields.List(fields.Dict())
+    optim_limits = fields.Dict()
+    setpoints = fields.Dict()
+
 
 class OptimizeResponseSchema(Schema):
     optimizations = fields.Dict()

@@ -27,8 +27,7 @@ from .exceptions import ApiError
 
 from bflab.interface import train
 from bflab.utils import (
-    load_training_yaml, load_prediction_yaml,
-    load_yaml, save_yaml
+    load_template, load_yaml, save_yaml
 )
 
 logger = logging.getLogger('better_factory')
@@ -42,7 +41,7 @@ class TrainApi(BaseApi):
     )
     def queue(self):
         params = TrainInputSchema().load(self.request.json_body)
-        config = load_training_yaml()
+        config = load_template('training')
 
         with tempfile.TemporaryDirectory() as tmpdirname:
             config["task"]["save_path"] = f"data/models/{params['model']}"
