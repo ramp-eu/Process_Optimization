@@ -48,7 +48,7 @@ ProOpt has three main functional modules and communicates with end-use applicati
 
 ## Usage
 
-0. Contact TDS and RAMP for granting access to private docker repo in RAMP (docker.ramp.eu)
+0. Contact TDS and RAMP for granting access to private docker repository in RAMP (docker.ramp.eu)
 1. Clone or copy folder `docker` to your local environment
 2. Login to docker.ramp.eu through docker CLI
 3. Modify `docker-compose.yml' to mount local folder for AI model storage after training
