@@ -49,6 +49,10 @@ class TrainApi(BaseApi):
             config["task"]["targets"] = [params['target_tag']]
             data_path = f"{tmpdirname}/df.csv"
             config["task"]["data_files"] = [data_path]
+            if "training" in params:
+                for key, value in params["training"].items():
+                    config["training"][key] = value
+
             keys = params['data'][0].keys()
             with open(data_path, 'w', newline='') as output_file:
                 dict_writer = csv.DictWriter(output_file, keys)

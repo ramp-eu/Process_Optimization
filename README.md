@@ -46,13 +46,6 @@ ProOpt has three main functional modules and communicates with end-use applicati
    application and runs the optimization algorithm. The module returns the optimal values of the process parameters,
    together with the achieved quality
 
-## Getting started
-
-The following steps are recommended to setting up the module:
-
-1. Resource preparation for training and running inference (Configuration is compatible to AWS and Azure at the moment)
-2. Running docker containers locally with configured resources
-
 ## Usage
 
 0. Contact TDS and RAMP for granting access to private docker repo in RAMP (docker.ramp.eu)
@@ -63,6 +56,11 @@ The following steps are recommended to setting up the module:
 
 The API docs will be then accessible via `http://localhost:6543/api/v1.0/`. An example of API can also be replicated
 using exported postman file `docker/ramp-TDS.postman_collection.json`.
+
+Notes:
+
+-   For tunning the training and optimization, please refer to documentations under `docs` folder.
+-   For making requests to the API, please refer to this example in python, `docker/examples/main.py`.
 
 ```text
 Definition of the API interface:
