@@ -1,17 +1,17 @@
 ## Advanced optimization parameters
 
-The following training parameters are supported, some parameters are required for the optimization process. Table below gives a short summary of the available parameters, and each parameter is explained in more detail after that.
+The following parameters are supported for optimizing the controls. Table below gives a short summary of the available parameters, and each parameter is explained in more detail after that.
 
 | Parameter    | Required | Definition | Default |
 | ------------ | -------- | ---------- | ------- |
-| `optim_limits` | x        | Optimization limits for each control variable (i.e. model input) to be optimized. Those controls for which limits are not specified, will not be optimized.  | null        |
+| `optim_limits` | x        | Optimization limits for each control variable (i.e. model input) to be optimized. Controls for which limits are not specified will not be optimized.  | null        |
 | `setpoints`    |          | Goal setpoints for target and/or control variables.        | null        |
 | `limits_high`  |          | High limits for target and/or control variables.           | null        |
 | `limits_low`   |          | Low limits for target and/or control variables.            | null        |
 
 ### `optim_limits`
 
-`optim_limits` specifies limits of controlling tags. Only those control variables will be optimized for which the limits are specified. 
+`optim_limits` specifies limits (min, max) of the interval over which a particular control tag should be optimized. Only those control variables will be optimized for which the limits are specified. 
 
 The table below specifies accepted parameters of each limit object.
 
