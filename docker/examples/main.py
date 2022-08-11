@@ -36,7 +36,12 @@ if __name__ == "__main__":
         "model": model_name,
         "input_tags": ["x1", "x2"],
         "target_tag": "y",
-        "data": train_df
+        "model_class": "SeqNLDS",
+        "horizon_past": 15,
+        "horizon_future": 5,
+        "datasets": [
+            train_df
+        ]
     })
     print(response.text)
 

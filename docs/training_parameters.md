@@ -1,3 +1,15 @@
+## Common training parameters
+
+| Parameter      | Definition                         | Default          |
+| -------------- | ---------------------------------- | ---------------- |
+| model          | Name of the model                  | required         |
+| input_tags     | Name of controllable tags/inputs   | required         |
+| target_tag     | Name of quality tag                | required         |
+| datasets       | List of datasets used for training | required         |
+| model_class    | Targeting model type in training   | Default: SeqNLDS |
+| horizon_past   |                                    | Default: 15      |
+| horizon_future |                                    | Default: 5       |
+
 ## Advanced training parameters
 
 The following training parameters are supported, and can be passed under key `training`.
