@@ -35,7 +35,7 @@ if __name__ == "__main__":
     response = request("train", {
         "model": model_name,
         "input_tags": ["x1", "x2"],
-        "target_tag": "y",
+        "target_tags": ["y"],
         "model_class": "SeqNLDS",
         "horizon_past": 15,
         "horizon_future": 5,

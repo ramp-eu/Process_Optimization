@@ -8,10 +8,10 @@ class TrainInputSchema(Schema):
         required=True
     )
     input_tags = fields.List(fields.Str(), required=True)
-    target_tag = fields.Str(required=True)
+    target_tags = fields.List(fields.Str(), required=True)
     model_class = fields.Str()
-    horizontal_past = fields.Int(required=True)
-    horizontal_future = fields.Int(required=True)
+    horizon_past = fields.Int(required=True)
+    horizon_future = fields.Int(required=True)
     training = fields.Dict()
 
 

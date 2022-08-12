@@ -49,7 +49,7 @@ class TrainApi(BaseApi):
             config["task"]["horizon_future"] = params["horizon_future"]
             config["task"]["save_path"] = f"data/models/{params['model']}"
             config["task"]["controls"] = params['input_tags']
-            config["task"]["targets"] = [params['target_tag']]
+            config["task"]["targets"] = params['target_tags']
             config["task"]["data_files"] = []
             if "training" in params:
                 for key, value in params["training"].items():

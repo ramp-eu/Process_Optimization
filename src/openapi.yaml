@@ -116,16 +116,16 @@ paths:
                   type: array
                   items:
                     type: string
-                target_tag:
-                  type: string
+                target_tags:
+                  type: array
+                  items:
+                    type: string
                 model_class:
                   type: string 
-                horizontal_past:
-                  type: number
-                  format: int
-                horizontal_future:
-                  type: number
-                  format: int
+                horizon_past:
+                  type: integer
+                horizon_future:
+                  type: integer
                 datasets:
                   type: array
                   items:
@@ -146,10 +146,10 @@ paths:
                       tag_name_1: 38.9917030334473
                       tag_name_2: 20
                 input_tags: ["tag_1", "tag_2"]
-                target_tag: "tag_1"
+                target_tags: ["tag_1"]
                 model_class: SeqNLDS
-                horizontal_past: 15
-                horizontal_future: 5
+                horizon_past: 15
+                horizon_future: 5
         required: false
       responses:
         200:
