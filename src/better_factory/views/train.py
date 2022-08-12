@@ -51,6 +51,9 @@ class TrainApi(BaseApi):
             config["task"]["controls"] = params['input_tags']
             config["task"]["targets"] = params['target_tags']
             config["task"]["data_files"] = []
+            config["task"]["time_discretization"] = params.get(
+                "time_discretization", "1min"
+            )
             if "training" in params:
                 for key, value in params["training"].items():
                     config["training"][key] = value

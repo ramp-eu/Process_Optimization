@@ -126,6 +126,8 @@ paths:
                   type: integer
                 horizon_future:
                   type: integer
+                time_discretization:
+                  type: string
                 datasets:
                   type: array
                   items:
@@ -150,6 +152,7 @@ paths:
                 model_class: SeqNLDS
                 horizon_past: 15
                 horizon_future: 5
+                time_discretization: "1min"
         required: false
       responses:
         200:
