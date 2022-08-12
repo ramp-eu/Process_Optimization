@@ -7,8 +7,8 @@
 | target_tag     | Name of quality tag                | required         |
 | datasets       | List of datasets used for training | required         |
 | model_class    | Targeting model type in training   | Default: SeqNLDS |
-| horizon_past   |                                    | Default: 15      |
-| horizon_future |                                    | Default: 5       |
+| horizon_past   |                                    | required         |
+| horizon_future |                                    | required         |
 
 ## Model Classes
 
