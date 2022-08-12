@@ -49,8 +49,7 @@ ProOpt has three main functional modules and communicates with end-use applicati
 3. Modify `docker-compose.yml' to mount local folder for AI model storage after training
 4. Exec `docker-compose up -d`
 
-The API docs will be then accessible via `http://localhost:6543/api/v1.0/`. An example of API can also be replicated
-using exported postman file `docker/ramp-TDS.postman_collection.json`.
+The API docs will be then accessible via `http://localhost:6543/api/v1.0/`.
 
 Notes:
 

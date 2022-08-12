@@ -1,3 +1,27 @@
+## Common training parameters
+
+| Parameter      | Definition                         | Default          |
+| -------------- | ---------------------------------- | ---------------- |
+| model          | Name of the model                  | required         |
+| input_tags     | Name of controllable tags/inputs   | required         |
+| target_tag     | Name of quality tag                | required         |
+| datasets       | List of datasets used for training | required         |
+| model_class    | Targeting model type in training   | Default: SeqNLDS |
+| horizon_past   |                                    | required         |
+| horizon_future |                                    | required         |
+
+## Model Classes
+
+'SeqMLP', 'SeqCNN', 'SeqLinear', 'SeqNLDS', 'SeqRNNEncDec'
+
+| Model Class  | Definition |
+| ------------ | ---------- |
+| SeqMLP       |            |
+| SeqCNN       |            |
+| SeqLinear    |            |
+| SeqNLDS      |            |
+| SeqRNNEncDec |            |
+
 ## Advanced training parameters
 
 The following training parameters are supported, and can be passed under key `training`.
@@ -12,15 +36,15 @@ The following training parameters are supported, and can be passed under key `tr
 
 ```
 
-| Parameter                    | Definition | Type | Default |
-| ---------------------------- | ---------- | ---- | ------- |
-| `fraction_validation`          | Fraction of data that is assigned to the validation set.  | float (between 0 and 1) | 0.2     |
-| `learning_rate`                | Learning rate for the stochastic gradient descent.        | float | 0.001   |
-| `learning_momentum`            | Momentum for the stochastic gradient descent.           | float (between 0 and 1) | 0.9     |
-| `learning_rate_decay_interval` | Number of training steps after which the learning rate is always decreased by a factor `learning_rate_decay_factor`. | int | 2000    |
-| `learning_rate_decay_factor`   | Factor by which the learning rate is always decreased after every `learning_rate_decay_interval` steps.  | float (between 0 and 1) | 0.5     |
-| `num_training_epochs`          | Number of training epochs. If not given, then the number of epochs will be decided by a minimum number of training steps, see `num_training_steps`. | int | null    |
-| `num_training_steps`           | Minimum number of training steps (or iterations). The total number of training steps is decided so that the last epoch will always be completed. If the `num_training_epochs` is given, then this value will be ignored.       | int | 10000   |
-| `max_grad_norm`                | Maximum value for the gradient norm. Used to avoid instability during training due to exploding gradients. | float | 100.0   |
-| `batch_size`                   | Batch size for the stochastic gradient descent.  | int | 32      |
-| `seed`                         | Random seed for reproducible results.  | int | 42      |
+| Parameter                      | Definition                                                                                                                                                                                                               | Type                    | Default |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- | ------- |
+| `fraction_validation`          | Fraction of data that is assigned to the validation set.                                                                                                                                                                 | float (between 0 and 1) | 0.2     |
+| `learning_rate`                | Learning rate for the stochastic gradient descent.                                                                                                                                                                       | float                   | 0.001   |
+| `learning_momentum`            | Momentum for the stochastic gradient descent.                                                                                                                                                                            | float (between 0 and 1) | 0.9     |
+| `learning_rate_decay_interval` | Number of training steps after which the learning rate is always decreased by a factor `learning_rate_decay_factor`.                                                                                                     | int                     | 2000    |
+| `learning_rate_decay_factor`   | Factor by which the learning rate is always decreased after every `learning_rate_decay_interval` steps.                                                                                                                  | float (between 0 and 1) | 0.5     |
+| `num_training_epochs`          | Number of training epochs. If not given, then the number of epochs will be decided by a minimum number of training steps, see `num_training_steps`.                                                                      | int                     | null    |
+| `num_training_steps`           | Minimum number of training steps (or iterations). The total number of training steps is decided so that the last epoch will always be completed. If the `num_training_epochs` is given, then this value will be ignored. | int                     | 10000   |
+| `max_grad_norm`                | Maximum value for the gradient norm. Used to avoid instability during training due to exploding gradients.                                                                                                               | float                   | 100.0   |
+| `batch_size`                   | Batch size for the stochastic gradient descent.                                                                                                                                                                          | int                     | 32      |
+| `seed`                         | Random seed for reproducible results.                                                                                                                                                                                    | int                     | 42      |

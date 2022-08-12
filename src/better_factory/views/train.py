@@ -44,20 +44,27 @@ class TrainApi(BaseApi):
         config = load_template('training')
 
         with tempfile.TemporaryDirectory() as tmpdirname:
+            config["model"]["class"] = params.get('model_class', "SeqNLDS")
+            config["task"]["horizon_past"] = params["horizon_past"]
+            config["task"]["horizon_future"] = params["horizon_future"]
             config["task"]["save_path"] = f"data/models/{params['model']}"
             config["task"]["controls"] = params['input_tags']
             config["task"]["targets"] = [params['target_tag']]
-            data_path = f"{tmpdirname}/df.csv"
-            config["task"]["data_files"] = [data_path]
+            config["task"]["data_files"] = []
             if "training" in params:
                 for key, value in params["training"].items():
                     config["training"][key] = value
 
-            keys = params['data'][0].keys()
-            with open(data_path, 'w', newline='') as output_file:
-                dict_writer = csv.DictWriter(output_file, keys)
-                dict_writer.writeheader()
-                dict_writer.writerows(params['data'])
+            for data_idx, data in enumerate(params['datasets']):
+                data_path = f"{tmpdirname}/df{data_idx}.csv"
+                keys = data[0].keys()
+                with open(data_path, 'w', newline='') as output_file:
+                    dict_writer = csv.DictWriter(output_file, keys)
+                    dict_writer.writeheader()
+                    dict_writer.writerows(data)
+
+                config["task"]["data_files"].append(data_path)
+
             
             config_path = f"{tmpdirname}/config.yaml"
             save_yaml(config, config_path)

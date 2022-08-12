@@ -118,24 +118,38 @@ paths:
                     type: string
                 target_tag:
                   type: string
-                data:
+                model_class:
+                  type: string 
+                horizontal_past:
+                  type: number
+                  format: int
+                horizontal_future:
+                  type: number
+                  format: int
+                datasets:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      time:
-                        type: string
-                      additionalProperties:
-                        type: number
-                        format: float
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        time:
+                          type: string
+                        additionalProperties:
+                          type: number
+                          format: float
               example:
                 model: test
-                data:
-                  - time: "2020-02-04T12:35:00.000Z"
-                    tag_name_1: 38.9917030334473
-                    tag_name_2: 20
+                datasets:
+                  - 
+                    - time: "2020-02-04T12:35:00.000Z"
+                      tag_name_1: 38.9917030334473
+                      tag_name_2: 20
                 input_tags: ["tag_1", "tag_2"]
                 target_tag: "tag_1"
+                model_class: SeqNLDS
+                horizontal_past: 15
+                horizontal_future: 5
         required: false
       responses:
         200:
