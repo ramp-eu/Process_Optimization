@@ -149,7 +149,7 @@ paths:
                       tag_name_2: 20
                 input_tags: ["tag_1", "tag_2"]
                 target_tags: ["tag_1"]
-                model_class: SeqNLDS
+                model_class: NLDS
                 horizon_past: 15
                 horizon_future: 5
                 time_discretization: "1min"

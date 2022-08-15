@@ -44,7 +44,7 @@ class TrainApi(BaseApi):
         config = load_template('training')
 
         with tempfile.TemporaryDirectory() as tmpdirname:
-            config["model"]["class"] = params.get('model_class', "SeqNLDS")
+            config["model"]["class"] = params.get('model_class', "NLDS")
             config["task"]["horizon_past"] = params["horizon_past"]
             config["task"]["horizon_future"] = params["horizon_future"]
             config["task"]["save_path"] = f"data/models/{params['model']}"
