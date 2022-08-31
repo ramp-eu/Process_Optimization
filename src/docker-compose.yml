@@ -8,6 +8,8 @@ services:
         - default
     image: docker.ramp.eu/tds-pvt/pserve:latest
     command: /app/config/docker.ini --reload
+    environment:
+      - PYTHONUNBUFFERED=TRUE
     volumes:
       - .:/app
     ports:

@@ -13,9 +13,13 @@ class TrainInputSchema(Schema):
     horizon_past = fields.Int(required=True)
     horizon_future = fields.Int(required=True)
     training = fields.Dict()
-    time_discretization = fields.Str()
+    time_discretization = fields.Str(required=True)
 
+
+class TrainDownloadSchema(Schema):
+    model = fields.Str(required=True)
 
 class TrainResponseSchema(Schema):
     model = fields.Str(required=True)
     status = fields.Str()
+    training_logs = fields.Str()

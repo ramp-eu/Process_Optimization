@@ -3,9 +3,11 @@ import csv
 import requests
 
 
-def request(action, payload):
+def request(action, payload, *, method="POST", **kwargs):
     url = {
         "train": "http://localhost:6543/api/v1.0/train/queue/",
+        "fetch_train": "http://localhost:6543/api/v1.0/train/fetch/",
+        "download_train": "http://localhost:6543/api/v1.0/train/download/",
         "predict": "http://localhost:6543/api/v1.0/model/predict/",
         "optimize": "http://localhost:6543/api/v1.0/model/optimize/"
     }[action]
@@ -13,10 +15,14 @@ def request(action, payload):
         'Authorization': 'Bearer testoken',
         'Content-Type': 'application/json'
     }
+    params = payload if method == "GET" else None
+    data = json.dumps(payload) if method == "POST" else None
     return requests.request(
-        "POST", url,
+        method, url,
         headers=headers,
-        data=json.dumps(payload)
+        params=params,
+        data=data,
+        **kwargs,
     )
 
 
@@ -45,6 +51,19 @@ if __name__ == "__main__":
         ]
     })
     print(response.text)
+
+    response = request("fetch_train", {
+        "model": model_name,
+    }, method="GET")
+    print(response.text)
+
+    response = request("download_train", {
+        "model": model_name,
+    })
+    download_path = f"./{model_name}.zip"
+    with open(download_path, 'wb') as f:
+        f.write(response.content)
+    print(f"Downloaded to {download_path}")
 
     response = request("predict", {
         "model": model_name,

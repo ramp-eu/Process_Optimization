@@ -2,11 +2,15 @@ import logging
 import shutil
 import tempfile
 import csv
+import os
+import shutil
 import matplotlib
+from contextlib import redirect_stdout
 matplotlib.use('Agg')
 
 
 from pyramid.view import view_config
+from pyramid.response import Response, FileResponse
 from sqlalchemy.orm import joinedload
 
 from pathlib import Path
@@ -19,6 +23,7 @@ from aiya_seqmod.interface import ModelManager
 
 # from .. import models
 from ..schemas.train import (
+    TrainDownloadSchema,
     TrainInputSchema,
     TrainResponseSchema
 )
@@ -51,9 +56,7 @@ class TrainApi(BaseApi):
             config["task"]["controls"] = params['input_tags']
             config["task"]["targets"] = params['target_tags']
             config["task"]["data_files"] = []
-            config["task"]["time_discretization"] = params.get(
-                "time_discretization", "1min"
-            )
+            config["task"]["time_discretization"] = params["time_discretization"]
             if "training" in params:
                 for key, value in params["training"].items():
                     config["training"][key] = value
@@ -72,7 +75,10 @@ class TrainApi(BaseApi):
             config_path = f"{tmpdirname}/config.yaml"
             save_yaml(config, config_path)
             config = load_yaml(config_path)
-            train(config)
+            with open(f"data/models/{params['model']}/training_logs.txt", 'w') as f:
+                with redirect_stdout(f):
+                    print(f"Start training model: {params['model']}")
+                    train(config)
 
             return TrainResponseSchema().dump({
                 "model": params['model'],
@@ -80,17 +86,57 @@ class TrainApi(BaseApi):
             })
 
 
-    # @view_config(
-    #     route_name='train_api.fetch',
-    #     request_method='GET',
-    #     openapi=True,
-    # )
-    # def fetch(self):
-    #     params = self.request.openapi_validated.parameters.query
-    #     model = params.get("model", None)
+    @view_config(
+        route_name='train_api.fetch',
+        request_method='GET',
+        openapi=True,
+    )
+    def fetch(self):
+        params = self.request.openapi_validated.parameters.query
+        model = params.get("model", None)
+        training_logs = ""
+        try:
+            with open(f"data/models/{params['model']}/training_logs.txt", "r") as f:
+                training_logs = f.readlines()
+        except FileNotFoundError:
+            raise ApiError('Training log is not available.', status=400)
 
-    #     return TrainResponseSchema().dump({
-    #         "model": "test",
-    #         "status": "available",
-    #     })
-        
+        status = "unavailable"
+        if os.path.exists(f"data/models/{params['model']}/model_core.pt"):
+            status = "available"
+
+        return TrainResponseSchema().dump({
+            "model": params['model'],
+            "status": status,
+            "training_logs": training_logs,
+        })
+
+    @view_config(
+        route_name='train_api.download',
+        request_method='POST',
+        openapi=True,
+    )
+    def download(self):
+        params = TrainDownloadSchema().load(self.request.json_body)
+        model = params.get("model", None)
+
+        if not os.path.exists(f"data/models/{model}/model_core.pt"):
+            raise ApiError('Model is not available for downloading.', status=400)
+
+        # base_dir = f"data/models"
+        base_dir = f"/tmp"
+        zip_name = f"{model}.zip"
+        zip_output_path = f"{base_dir}/{model}"
+        zip_path = f"{base_dir}/{model}.zip"
+        shutil.make_archive(
+            zip_output_path, 
+            'zip', 
+            f"data/models/{model}/"
+        )
+
+        response = Response(content_type='application/zip')
+        response = FileResponse(str(zip_path))
+        response.headers['Content-Disposition'] = (
+            f'attachment; filename={zip_name}'
+        )
+        return response
