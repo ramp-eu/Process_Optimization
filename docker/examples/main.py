@@ -44,7 +44,7 @@ if __name__ == "__main__":
         "target_tags": ["y"],
         "model_class": "NLDS",
         "horizon_past": 15,
-        "horizon_future": 5,
+        "horizon_future": 1,
         "time_discretization": "1min",
         "datasets": [
             train_df

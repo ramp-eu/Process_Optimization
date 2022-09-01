@@ -4,11 +4,10 @@ import tempfile
 import csv
 import os
 import shutil
-import matplotlib
+import traceback
 from contextlib import redirect_stdout
-matplotlib.use('Agg')
 
-
+import matplotlib
 from pyramid.view import view_config
 from pyramid.response import Response, FileResponse
 from sqlalchemy.orm import joinedload
@@ -19,6 +18,7 @@ import aiya_seqmod
 from aiya_seqmod.data.preprocess import IdentityPreprocessor
 from aiya_seqmod.interface import ModelManager
 
+matplotlib.use('Agg')
 
 
 # from .. import models
@@ -75,10 +75,30 @@ class TrainApi(BaseApi):
             config_path = f"{tmpdirname}/config.yaml"
             save_yaml(config, config_path)
             config = load_yaml(config_path)
+            is_error = False 
+            training_logs = ""
             with open(f"data/models/{params['model']}/training_logs.txt", 'w') as f:
                 with redirect_stdout(f):
                     print(f"Start training model: {params['model']}")
-                    train(config)
+                    try:
+                        train(config)
+                    except:
+                        print(traceback.format_exc())
+                        is_error = True
+                        
+            
+            if is_error:
+                try:
+                    with open(f"data/models/{params['model']}/training_logs.txt", "r") as f:
+                        training_logs = f.readlines()
+                except FileNotFoundError:
+                    raise ApiError('Training log is not available.', status=400)
+
+                return TrainResponseSchema().dump({
+                    "model": params['model'],
+                    "status": "error",
+                    "training_logs": training_logs,
+                })
 
             return TrainResponseSchema().dump({
                 "model": params['model'],
