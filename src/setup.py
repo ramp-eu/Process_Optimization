@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 base_requires = [
     # core
-    'pyramid==1.10.4',
+    'pyramid==1.10.7',
     'tet==0.3.2',
 
     # DB

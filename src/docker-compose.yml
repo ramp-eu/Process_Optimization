@@ -11,6 +11,9 @@ services:
     environment:
       - PYTHONUNBUFFERED=TRUE
     volumes:
-      - .:/app
+      - ./data:/app/data
+      - ./better_factory:/app/better_factory
+      - ./config:/app/config
+      - ./openapi.yaml:/app/openapi.yaml
     ports:
       - 6543:6543

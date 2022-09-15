@@ -77,7 +77,8 @@ class TrainApi(BaseApi):
             config = load_yaml(config_path)
             is_error = False 
             training_logs = ""
-            with open(f"data/models/{params['model']}/training_logs.txt", 'w') as f:
+            Path(f"data/models/{params['model']}").mkdir(parents=True, exist_ok=True)
+            with open(f"data/models/{params['model']}/training_logs.txt", 'w', buffering=1) as f:
                 with redirect_stdout(f):
                     print(f"Start training model: {params['model']}")
                     try:

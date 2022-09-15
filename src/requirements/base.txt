@@ -1,5 +1,6 @@
 openapi-core==0.13.2
 pyramid-openapi3==0.8.3
+openapi_spec_validator==0.4.0
 
 better_factory_lab @ git+ssh://git@gitlab.com/topdatascience/better_factory_lab@main#egg=better_factory_lab
 
