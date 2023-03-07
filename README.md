@@ -67,7 +67,7 @@ Information about the API can be found in the [API documentation](http://localho
 Any feedback and suggestions can be submitted by creating `New issue` in the `Issues tab` or by emailing the development
 team:
 
--   Hung Ta (hung.ta@topdatasience.com)
+-   Lauri Mannila (lauri.mannila@topdatasience.com)
 -   Juho Piironen (juho.piironen@topdatascience.com)
 -   Duc Ta (duc.ta@topdatascience.com)
 
