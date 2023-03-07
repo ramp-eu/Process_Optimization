@@ -73,4 +73,4 @@ team:
 
 ## License
 
-[MIT](LICENSE) © <Top Data Science>
+[Proprietary](LICENSE) © <Top Data Science>
