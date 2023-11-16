@@ -53,8 +53,9 @@ class ModelApi(BaseApi):
             config['data_path'] = file.name
 
             pred = predict(config)
+            target = pred.columns.tolist()[0]
             return PredictResponseSchema().dump({
-                "predictions": pred['y'].to_list()
+                "predictions": pred[target].to_list()
             })
 
 
