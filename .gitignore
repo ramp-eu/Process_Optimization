@@ -72,6 +72,8 @@ htmlcov/
 src/data/models/*
 src/data/*
 !src/data/.gitkeep
+docker/models/*
+!docker/models/.gitkeep
 
 # deployment
 production.ini
